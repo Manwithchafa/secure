@@ -2,9 +2,11 @@
 
 namespace App\Listeners;
 
+use App\Mail\WelcomeOnboardMail;
 use App\Notifications\LoginNotification;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class SendLoginNotificationListener
@@ -25,8 +27,9 @@ class SendLoginNotificationListener
             $userAgent = request()->userAgent();
 
             $user->notify(new LoginNotification($ip, $userAgent));
+            Mail::to($user->email)->send(new WelcomeOnboardMail($user));
 
-            Log::info('Login notification email dispatched.', [
+            Log::info('Login & onboarding welcome email dispatched.', [
                 'user_id' => $user->id,
                 'email' => $user->email,
                 'ip' => $ip,

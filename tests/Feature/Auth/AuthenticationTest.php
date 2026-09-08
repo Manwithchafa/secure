@@ -22,6 +22,7 @@ class AuthenticationTest extends TestCase
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
         Notification::fake();
+        \Illuminate\Support\Facades\Mail::fake();
 
         $user = User::factory()->create();
 
@@ -35,6 +36,7 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('onboarding.index', absolute: false));
 
         Notification::assertSentTo($user, LoginNotification::class);
+        \Illuminate\Support\Facades\Mail::assertSent(\App\Mail\WelcomeOnboardMail::class);
     }
 
     public function test_admin_login_ignores_stale_intended_member_url(): void

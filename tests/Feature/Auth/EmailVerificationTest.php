@@ -55,4 +55,30 @@ class EmailVerificationTest extends TestCase
 
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
     }
+
+    public function test_registration_dispatches_custom_verify_email_notification(): void
+    {
+        \Illuminate\Support\Facades\Notification::fake();
+
+        $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'testuser@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $user = User::where('email', 'testuser@example.com')->first();
+        $this->assertNotNull($user);
+
+        \Illuminate\Support\Facades\Notification::assertSentTo($user, \App\Notifications\CustomVerifyEmail::class);
+    }
+
+    public function test_unverified_user_cannot_access_onboarding(): void
+    {
+        $user = User::factory()->unverified()->create();
+
+        $response = $this->actingAs($user)->get(route('onboarding.index'));
+
+        $response->assertRedirect(route('verification.notice'));
+    }
 }

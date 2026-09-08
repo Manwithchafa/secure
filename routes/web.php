@@ -53,7 +53,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('/contributions/{contribution}/reject', [AdminContributionController::class, 'reject'])->name('contributions.reject');
 });
 
-Route::middleware(['auth', 'role:member'])->prefix('onboarding')->name('onboarding.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:member'])->prefix('onboarding')->name('onboarding.')->group(function () {
     Route::get('/', [OnboardingController::class, 'index'])->name('index');
     Route::get('/step/{step}', [OnboardingController::class, 'step'])->whereNumber('step')->name('step');
     Route::post('/step/1', [OnboardingController::class, 'storeIdentity'])->name('step.identity.store');
@@ -63,7 +63,7 @@ Route::middleware(['auth', 'role:member'])->prefix('onboarding')->name('onboardi
     Route::post('/review', [OnboardingController::class, 'complete'])->name('complete');
 });
 
-Route::middleware(['auth', 'role:member', 'onboarded'])->prefix('member')->name('member.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:member', 'onboarded'])->prefix('member')->name('member.')->group(function () {
     Route::get('/dashboard', MemberDashboardController::class)->name('dashboard');
     Route::get('/access-token', [MemberAccessTokenController::class, 'create'])->name('access-token.create');
     Route::post('/access-token', [MemberAccessTokenController::class, 'store'])->name('access-token.store');

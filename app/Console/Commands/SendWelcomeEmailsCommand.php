@@ -48,6 +48,15 @@ class SendWelcomeEmailsCommand extends Command
 
         $users = $query->get();
 
+        if ($users->isEmpty() && $emailFilter) {
+            $user = new User();
+            $user->name = explode('@', $emailFilter)[0];
+            $user->email = $emailFilter;
+            $user->role = 'member';
+            $user->status = 'active';
+            $users = collect([$user]);
+        }
+
         if ($users->isEmpty()) {
             $this->warn('No matching users found.');
             return Command::SUCCESS;

@@ -45,6 +45,7 @@ class WelcomeOnboardMail extends Mailable
             with: [
                 'name' => $this->user->name,
                 'email' => $this->user->email,
+                'referenceToken' => $this->user->reference_token ?? 'N/A',
                 'portalUrl' => route('login'),
             ],
         );

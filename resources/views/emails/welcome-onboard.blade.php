@@ -37,6 +37,25 @@
                                 Through the CCA Portal, you gain direct access to your agricultural participation records, settlement tracking, and active batch metrics.
                             </p>
 
+                            @if (!empty($referenceToken) && $referenceToken !== 'N/A')
+                            <!-- Reference Token Card -->
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a; border-radius: 8px; border-left: 4px solid #15803d; margin-bottom: 28px;">
+                                <tr>
+                                    <td style="padding: 20px 24px;">
+                                        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; margin-bottom: 6px;">
+                                            Your Partner Reference Token
+                                        </div>
+                                        <div style="font-family: 'Courier New', Courier, monospace, sans-serif; font-size: 22px; font-weight: 700; color: #38bdf8; letter-spacing: 2px; margin-bottom: 8px;">
+                                            {{ $referenceToken }}
+                                        </div>
+                                        <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
+                                            🔒 <strong>Keep this token safe.</strong> You will need your Email, Password, and this Reference Token to sign in to your CCA Portal account.
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            @endif
+
                             <!-- Feature Highlights Box -->
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 28px;">
                                 <tr>

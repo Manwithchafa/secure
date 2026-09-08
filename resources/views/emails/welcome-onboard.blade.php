@@ -26,7 +26,7 @@
                     <tr>
                         <td style="padding: 40px 32px;">
                             <h2 style="margin-top: 0; margin-bottom: 16px; color: #0f172a; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">
-                                Welcome Onboard, {{ $name }}! 🌾
+                                Welcome Onboard, {{ $name }}!
                             </h2>
 
                             <p style="margin-bottom: 20px; font-size: 15px; color: #334155; line-height: 1.6;">
@@ -49,7 +49,7 @@
                                             {{ $referenceToken }}
                                         </div>
                                         <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
-                                            🔒 <strong>Keep this token safe.</strong> You will need your Email, Password, and this Reference Token to sign in to your CCA Portal account.
+                                            <strong>Keep this token safe.</strong> You will need your Email, Password, and this Reference Token to sign in to your CCA Portal account.
                                         </div>
                                     </td>
                                 </tr>

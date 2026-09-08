@@ -26,7 +26,7 @@
                     <tr>
                         <td style="padding: 40px 32px;">
                             <h2 style="margin-top: 0; margin-bottom: 16px; color: #0f172a; font-size: 22px; font-weight: 700; letter-spacing: -0.3px;">
-                                Verify Your Email Address ✉️
+                                Verify Your Email Address
                             </h2>
 
                             <p style="margin-bottom: 20px; font-size: 15px; color: #334155; line-height: 1.6;">
@@ -49,7 +49,7 @@
                                             {{ $referenceToken }}
                                         </div>
                                         <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
-                                            🔒 Keep this reference token safe for signing in to your portal account.
+                                            Keep this reference token safe for signing in to your portal account.
                                         </div>
                                     </td>
                                 </tr>
@@ -68,7 +68,7 @@
                             </table>
 
                             <p style="margin-bottom: 24px; font-size: 13px; color: #64748b; line-height: 1.5;">
-                                ⏱️ This verification link will expire in 60 minutes. If you did not create an account with Country Culture Acres, no further action is required.
+                                This verification link will expire in 60 minutes. If you did not create an account with Country Culture Acres, no further action is required.
                             </p>
 
                             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 24px;">

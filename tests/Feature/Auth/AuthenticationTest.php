@@ -3,7 +3,9 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Notifications\LoginNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -19,6 +21,8 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
+        Notification::fake();
+
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
@@ -29,6 +33,8 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertRedirect(route('onboarding.index', absolute: false));
+
+        Notification::assertSentTo($user, LoginNotification::class);
     }
 
     public function test_admin_login_ignores_stale_intended_member_url(): void

@@ -56,11 +56,11 @@
                             </table>
                             @endif
 
-                            <!-- Call to Action Button -->
+                            <!-- Primary Verification Action Button -->
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 28px;">
                                 <tr>
                                     <td align="center">
-                                        <a href="{{ $verificationUrl }}" target="_blank" style="display: inline-block; background-color: #15803d; color: #ffffff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 14px 32px; border-radius: 8px; box-shadow: 0 2px 4px rgba(21, 128, 61, 0.2); transition: background-color 0.2s ease;">
+                                        <a href="{{ $verificationUrl }}" target="_blank" style="display: inline-block; background-color: #15803d; color: #ffffff; font-size: 16px; font-weight: 600; text-decoration: none; padding: 14px 36px; border-radius: 8px; box-shadow: 0 2px 4px rgba(21, 128, 61, 0.2);">
                                             Verify Email Address &rarr;
                                         </a>
                                     </td>
@@ -68,15 +68,27 @@
                             </table>
 
                             <p style="margin-bottom: 24px; font-size: 13px; color: #64748b; line-height: 1.5;">
-                                This verification link will expire in 60 minutes. If you did not create an account with Country Culture Acres, no further action is required.
+                                Note: This verification link will expire in 60 minutes. If you did not create an account with Country Culture Acres, no further action is required.
                             </p>
 
                             <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 24px;">
 
-                            <p style="margin-bottom: 8px; font-size: 13px; color: #64748b; word-break: break-all;">
-                                If you're having trouble clicking the "Verify Email Address" button, copy and paste the URL below into your web browser:<br>
-                                <a href="{{ $verificationUrl }}" style="color: #15803d; text-decoration: underline;">{{ $verificationUrl }}</a>
-                            </p>
+                            <!-- Direct Clickable Fallback Box -->
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 24px;">
+                                <tr>
+                                    <td style="padding: 16px 20px; font-size: 13px; color: #475569; line-height: 1.5;">
+                                        <div style="font-weight: 600; color: #1e293b; margin-bottom: 6px;">
+                                            Trouble clicking the button?
+                                        </div>
+                                        <div>
+                                            Click the direct link below or copy and paste it into your browser address bar:
+                                        </div>
+                                        <div style="margin-top: 8px; padding: 10px 14px; background-color: #ffffff; border-radius: 6px; border: 1px solid #e2e8f0; word-break: break-all;">
+                                            <a href="{{ $verificationUrl }}" target="_blank" style="color: #15803d; font-size: 13px; font-weight: 500; text-decoration: underline;">{{ $verificationUrl }}</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
 
                             <p style="margin-top: 24px; margin-bottom: 0; font-size: 14px; color: #334155;">
                                 Warm regards,<br>

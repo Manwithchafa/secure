@@ -42,14 +42,14 @@
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0f172a; border-radius: 8px; border-left: 4px solid #15803d; margin-bottom: 28px;">
                                 <tr>
                                     <td style="padding: 20px 24px;">
-                                        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; margin-bottom: 6px;">
+                                        <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 1px; margin-bottom: 8px;">
                                             Your Partner Reference Token
                                         </div>
-                                        <div style="font-family: 'Courier New', Courier, monospace, sans-serif; font-size: 22px; font-weight: 700; color: #38bdf8; letter-spacing: 2px; margin-bottom: 8px;">
+                                        <div style="font-family: 'Courier New', Courier, monospace, sans-serif; font-size: 22px; font-weight: 700; color: #38bdf8; letter-spacing: 2px; margin-bottom: 10px; user-select: all; -webkit-user-select: all; -moz-user-select: all; -ms-user-select: all; display: inline-block; padding: 6px 12px; background-color: rgba(255, 255, 255, 0.06); border-radius: 6px; border: 1px dashed rgba(56, 189, 248, 0.4);">
                                             {{ $referenceToken }}
                                         </div>
                                         <div style="font-size: 12px; color: #cbd5e1; line-height: 1.5;">
-                                            Keep this reference token handy. You will need it along with your email and new password to log in.
+                                            <strong>Keep this token safe.</strong> Double-click or tap above to copy. You will need it to log in.
                                         </div>
                                     </td>
                                 </tr>

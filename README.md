@@ -41,6 +41,34 @@ php artisan boost:install
 
 Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
+## Transactional email
+
+Email verification and password reset use Laravel's configured mailer. The
+`.env.example` is set up for Brevo SMTP. Before sending, verify your sender
+address or domain with Brevo and configure its SPF/DKIM records. Create an
+SMTP key in Brevo (not an API key), then set these values in the deployment
+environment:
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_SCHEME=
+MAIL_HOST=smtp-relay.brevo.com
+MAIL_PORT=587
+MAIL_USERNAME=<Brevo SMTP login>
+MAIL_PASSWORD=<Brevo SMTP key>
+MAIL_FROM_ADDRESS=<verified sender address>
+MAIL_FROM_NAME="Country Culture Acres"
+```
+
+Redeploy or restart the application after updating environment variables. If
+Laravel's configuration is cached, clear it with `php artisan config:clear`.
+Brevo's free plan currently allows 300 email sends per day and adds Brevo
+branding; free plans have quotas and can change, so this is not unlimited
+delivery. See [Brevo's free plan limits](https://help.brevo.com/hc/en-us/articles/208580669-FAQs-What-are-the-limits-of-the-Free-plan).
+
+Resend remains supported by setting `MAIL_MAILER=resend` and providing
+`RESEND_API_KEY`, but resending cannot bypass the provider's sending quota.
+
 ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).

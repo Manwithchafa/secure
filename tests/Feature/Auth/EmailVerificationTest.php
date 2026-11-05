@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
@@ -111,6 +112,21 @@ class EmailVerificationTest extends TestCase
         $this->assertNotNull($user);
 
         \Illuminate\Support\Facades\Notification::assertSentTo($user, \App\Notifications\CustomVerifyEmail::class);
+    }
+
+    public function test_unverified_user_can_resend_verification_email(): void
+    {
+        $user = User::factory()->unverified()->create();
+
+        Notification::fake();
+
+        $response = $this->actingAs($user)
+            ->from(route('verification.notice'))
+            ->post(route('verification.send'));
+
+        $response->assertRedirect(route('verification.notice'));
+        $response->assertSessionHas('status', 'verification-link-sent');
+        Notification::assertSentTo($user, \App\Notifications\CustomVerifyEmail::class);
     }
 
     public function test_unverified_user_cannot_access_onboarding(): void

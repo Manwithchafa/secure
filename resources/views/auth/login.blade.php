@@ -11,7 +11,13 @@
         <h2 class="text-2xl font-black text-white">Login</h2>
         <p class="mt-2 text-sm leading-6 text-slate-400">Enter vetted credentials to synchronize with the cooperative ledger.</p>
 
-        <x-auth-session-status class="mt-5 text-sm text-emerald-300" :status="session('status')" />
+        @if (session('status') === 'email-verified')
+            <div class="mt-5 text-sm text-emerald-300">
+                {{ __('Your email has been verified. Please log in to continue.') }}
+            </div>
+        @else
+            <x-auth-session-status class="mt-5 text-sm text-emerald-300" :status="session('status')" />
+        @endif
 
         <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-5" x-data="{ loading: false, message: 'Login', states: ['Synchronizing Ownership Records...', 'Verifying Partner Credentials...', 'Loading Cooperative Ledger...'] }" x-on:submit="loading = true; let i = 0; message = states[i]; setInterval(() => { i = (i + 1) % states.length; message = states[i]; }, 900)">
             @csrf

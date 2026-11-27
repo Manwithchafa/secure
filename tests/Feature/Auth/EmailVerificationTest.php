@@ -3,9 +3,11 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Notifications\CustomVerifyEmail;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
@@ -99,19 +101,27 @@ class EmailVerificationTest extends TestCase
 
     public function test_registration_dispatches_custom_verify_email_notification(): void
     {
-        \Illuminate\Support\Facades\Notification::fake();
+        Notification::fake();
+        config([
+            'services.turnstile.site_key' => 'test-site-key',
+            'services.turnstile.secret_key' => bin2hex(random_bytes(16)),
+        ]);
+        Http::fake([
+            '*' => Http::response(['success' => true]),
+        ]);
 
         $this->post('/register', [
             'name' => 'Test User',
             'email' => 'testuser@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
+            'cf-turnstile-response' => 'test-turnstile-token',
         ]);
 
         $user = User::where('email', 'testuser@example.com')->first();
         $this->assertNotNull($user);
 
-        \Illuminate\Support\Facades\Notification::assertSentTo($user, \App\Notifications\CustomVerifyEmail::class);
+        Notification::assertSentTo($user, CustomVerifyEmail::class);
     }
 
     public function test_unverified_user_can_resend_verification_email(): void
@@ -126,7 +136,7 @@ class EmailVerificationTest extends TestCase
 
         $response->assertRedirect(route('verification.notice'));
         $response->assertSessionHas('status', 'verification-link-sent');
-        Notification::assertSentTo($user, \App\Notifications\CustomVerifyEmail::class);
+        Notification::assertSentTo($user, CustomVerifyEmail::class);
     }
 
     public function test_unverified_user_cannot_access_onboarding(): void

@@ -69,6 +69,24 @@ delivery. See [Brevo's free plan limits](https://help.brevo.com/hc/en-us/article
 Resend remains supported by setting `MAIL_MAILER=resend` and providing
 `RESEND_API_KEY`, but resending cannot bypass the provider's sending quota.
 
+## Registration bot protection
+
+Registration uses Cloudflare Turnstile. Set `TURNSTILE_SITE_KEY` and
+`TURNSTILE_SECRET_KEY` in Railway; the site key renders the widget only on the
+registration page, and the secret is used only for server-side verification.
+To rotate the secret, update `TURNSTILE_SECRET_KEY` in Railway and restart the
+application so the new environment value is loaded. Never put the secret in
+source code or client-side configuration.
+
+Test the flow with `php artisan test --filter=RegistrationTest`. Registration
+also has a limit of 30 POST requests per minute per IP, configurable on the
+POST `/register` route in `routes/auth.php`; this limit supplements Turnstile
+and is not the anti-bot check. If Turnstile configuration is missing or
+Cloudflare cannot verify a challenge, registration is unavailable or rejected,
+and no account or registration emails are created. Configuration failures and
+verification outages are recorded in the application log without challenge
+tokens or credentials.
+
 ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).

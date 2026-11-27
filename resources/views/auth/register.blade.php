@@ -41,7 +41,19 @@
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-sm text-red-300" />
             </div>
 
-            <button type="submit" class="cca-button w-full">Signup</button>
+            @if ($turnstileAvailable)
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                <div>
+                    <div class="cf-turnstile" data-sitekey="{{ $turnstileSiteKey }}"></div>
+                    <x-input-error :messages="$errors->get('cf-turnstile-response')" class="mt-2 text-sm text-red-300" />
+                </div>
+            @else
+                <p class="text-sm text-red-300" role="alert">
+                    Registration is temporarily unavailable because security verification is not configured. Please try again later.
+                </p>
+            @endif
+
+            <button type="submit" class="cca-button w-full" @disabled(! $turnstileAvailable)>Signup</button>
         </form>
 
         <p class="mt-6 text-center text-sm text-slate-400">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\TurnstileService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,9 +20,14 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(TurnstileService $turnstile): View
     {
-        return view('auth.register');
+        $turnstileAvailable = $turnstile->isConfigured();
+
+        return view('auth.register', [
+            'turnstileAvailable' => $turnstileAvailable,
+            'turnstileSiteKey' => $turnstileAvailable ? config('services.turnstile.site_key') : null,
+        ]);
     }
 
     /**
@@ -29,8 +35,14 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, TurnstileService $turnstile): RedirectResponse
     {
+        if (! $turnstile->verify($request->input('cf-turnstile-response'))) {
+            throw ValidationException::withMessages([
+                'cf-turnstile-response' => 'Please complete the security check before registering.',
+            ]);
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
